@@ -1,0 +1,207 @@
+.label-block{
+  width: 50%;
+}
+.username-block{
+  width:50%;
+  text-align: right;
+  font-size: medium;
+  text-shadow: none;
+  font-weight: normal;
+  margin-top: -5px;
+}
+.username-block>button{
+  background-color: mediumpurple;
+  border: none;
+  border-left: black;
+  color: white;
+  width:100px;
+  padding: 10px 28px;
+  text-align: center;
+  font-size: 16px;
+  opacity: 1;
+  transition: 0.3s;
+  margin: 5px;
+}
+
+header{
+  background-color: mediumpurple;
+  height: 50px;
+  font-size: 32px;
+  font-family: Georgia;
+  font-weight: bold;
+  color: white;
+  text-shadow: -4px 4px 2px silver;
+  padding-top: 10px;
+}
+header>h1{margin-top: 15px;}
+#head{
+  margin: 0 13%;
+  display: flex;
+}
+#logout{
+  font-size: medium;
+}
+.container{
+  margin: 0 15%;
+}
+.menu-container{
+  width: 25%;
+  float:left;
+}
+div.menu{
+  padding: 10px 25%;
+  border: none;
+}
+.task-container{
+  float: right;
+  width: 70%;
+
+}
+input[type='color']{
+  display: inline-block;
+  width: 28px;
+  height: 14px;
+  border: none;
+}
+
+input[type='text']{
+  display: inline-block;
+  margin-left: 5px;
+  width:70%;
+}
+.addButton{
+  font-family: Georgia;
+  background-color: #5207bb;
+  border: none;
+  color: white;
+  width:100%;
+  padding: 10px 28px;
+  text-align: center;
+  font-size: 16px;
+  opacity: 1;
+  transition: 0.3s;
+  margin: 5px;
+}
+button>img{
+  width:16px;
+}
+button.editdel{
+  background-color: inherit;
+  border: none;
+  width:25px;
+  text-align: center;
+  opacity: 1;
+}
+
+
+.projcolor{
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: -7px;
+}
+.editdel{
+  visibility: hidden;
+}
+.proj-contain{
+  border-bottom: 1.5px solid #949494;
+  padding: 10px;
+}
+.proj-contain:hover{
+  background-color: silver;
+}
+.proj-contain:hover>.editdel{
+  visibility: visible;
+}
+.taskContent{
+  float: left;
+  width: 500px;
+  margin: 5px;
+
+}
+.taskContent>span{
+  display: block;
+  margin-bottom: 5px;
+}
+input[type='radio']{
+  visibility: hidden;
+  cursor: pointer;
+}
+
+label{
+  cursor: pointer;
+  height: 100%;
+  width:100%;
+}
+
+.archive{
+  background-color: inherit;
+}
+.archive>img{
+  width: 25px;
+}
+
+.title{
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 30px;
+  font-size: 28px;
+  border-bottom: 1px solid silver;
+}
+
+.task{
+  position: relative;
+  width: 100%;
+  height: 70px;
+  margin-bottom: 5px;
+}
+
+.editTask{
+  visibility: hidden;
+  float:right;
+  width: 35px;
+
+}
+.task:hover .editTask{
+  visibility: visible;
+}
+
+.task-container{
+  margin-top: 5px;
+  background-color: inherit;
+  height: 100%;
+  padding: 10px;
+}
+
+.create{
+  margin-top: 5px;
+  padding: 5px;
+  border-top: 0.5px solid #a8a8a8;
+}
+.statusContainer{
+  float: right;
+}
+.statusContainer>label{
+  display: block;
+  font-family: sans-serif;
+}
+.editTask>button{
+  margin-bottom: 5px;
+  display: block;
+  background-color: inherit;
+  border: none;
+  width:30px;
+  text-align: center;
+  opacity: 1;
+}
+.statusContainer>input[type="checkbox"]{
+  margin-left: 30%;
+  margin-top: 5px;
+}
+.taskDate{
+  font-size: 12px;
+  font-family: sans-serif;
+  text-align: right;
+}
