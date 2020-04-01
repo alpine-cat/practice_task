@@ -6,7 +6,9 @@
 
 ``` bash
 # install dependencies
-npm install
+npm install vue
+npm install jquery
+npm install moment
 
 # serve with hot reload at localhost:8080
 npm run dev
