@@ -33,9 +33,8 @@
               this.$router.push({name: 'home'})
             },
             error: (responce) => {
-              if (responce.status === 400) {
-                alert('Неверный логин или пароль!')
-              }
+              alert('Неверный логин или пароль!')
+              
             }
           })
         },
