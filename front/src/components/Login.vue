@@ -34,8 +34,8 @@
               this.$router.push({name: 'home'})
             },
             error: (response) => {
-              console.log(response)
               alert('Неверный логин или пароль!')
+
             }
           })
         },
