@@ -1,11 +1,20 @@
 from django.db import models
 
-DONE = True
-TODO = False
-STATUS = (
-        (DONE, 'Done'),
-        (TODO, 'Not done'),
+TASK_DONE = True
+TASK_TODO = False
+TASK_STATUS = (
+        (TASK_DONE, 'Done'),
+        (TASK_TODO, 'Not done'),
     )
+
+TASK_HIGH_PRIORITY = 0
+TASK_MIDDLE_PRIORITY = 1
+TASK_LOW_PRIORITY = 2
+TASK_PRIORITY = (
+    (TASK_HIGH_PRIORITY, 'red'),
+    (TASK_MIDDLE_PRIORITY, 'orange'),
+    (TASK_LOW_PRIORITY, 'white'),
+)
 
 
 class Project(models.Model):
@@ -18,21 +27,11 @@ class Project(models.Model):
 
 
 class Task(models.Model):
-
-    HIGH = 0
-    MIDDLE = 1
-    LOW = 2
-    PRIORITY = (
-        (HIGH, 'red'),
-        (MIDDLE, 'orange'),
-        (LOW, 'white'),
-    )
-
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
     task = models.CharField(max_length=300)
     date = models.DateField()
-    status = models.CharField(max_length=10, choices=STATUS)
-    priority = models.CharField(max_length=10, choices=PRIORITY)
+    status = models.CharField(max_length=10, choices=TASK_STATUS)
+    priority = models.CharField(max_length=10, choices=TASK_PRIORITY)
 
     class Meta:
         ordering = ['priority']

@@ -43,9 +43,9 @@
           $.ajax({
             url: `http://127.0.0.1:8000/tasks/?project=${this.$props.project.id}&date_ch=&status=False&owner=${sessionStorage.username}`,
             type: 'GET',
-            success: (responce) => {
-              console.log(responce)
-              if(responce.length > 0)
+            success: (response) => {
+              console.log(response)
+              if(response.length > 0)
               {
                 alert("Невозможно удалить проект, так как есть незавершенные задачи!")
               }else{
@@ -53,7 +53,7 @@
                   {
                     url: this.$props.project.url,
                     type: 'DELETE',
-                    success: (responce)=>{
+                    success: (response)=>{
                       alert("Проект удален!")
                       this.$router.go(0)
                     }
@@ -73,10 +73,10 @@
                 'color': this.proj_color,
                 'tasks': []
               },
-              success: (responce) => {
+              success: (response) => {
                 this.$router.go(0)
               },
-              error: (responce) => {
+              error: (response) => {
                 this.refreshTokens()
               }
 

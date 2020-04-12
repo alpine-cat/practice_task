@@ -7,7 +7,7 @@
 
       <div class="editTask"><button v-on:click="add = false" class=""><img src="./../assets/edit.png"></button>
       <button v-on:click="deleteTask" class=""><img src="./../assets/delete.png"></button></div>
-      <div class="statusContainer"><label for="taskstatus">status</label>
+      <div class="statusContainer"><label for="taskstatus">Статус</label>
       <input id="taskstatus" type="checkbox" @change="editStatus" :checked="$props.task.status"></div>
     </div>
   <div v-else>
@@ -58,11 +58,11 @@
                 priority: this.priority_select.id,
                 status: 'False'
               },
-              success: (responce) =>
+              success: (response) =>
               {
                 this.$router.go(0)
               },
-              error: (responce) =>
+              error: (response) =>
               {
                 alert('Перепроверьте правильность введенных данных или перезагрузите страницу.')
 
@@ -75,7 +75,7 @@
               {
                 url: this.$props.task.url,
                 type: 'DELETE',
-                success: (responce)=>{
+                success: (response)=>{
                   alert("Задача удалена!")
                   this.$router.go(0)
                 }
@@ -83,7 +83,6 @@
           },
           editStatus(){
             console.log(this.$props.task.priority)
-            console.log('heeeeeeeeeey')
             $.ajax({
               url: this.$props.task.url,
               type: 'PUT',
@@ -94,12 +93,11 @@
                 status: !this.$props.task.status?'True':'False',
                 priority: this.$props.task.priority
               },
-              success: (responce) => {
+              success: (response) => {
                 this.$router.go(0)
               },
-              error: (responce) => {
-                console.log(responce)
-                alert('Упс.. что-то пошло не так. Перезагрузите страницу и попробуйте еще')
+              error: (response) => {
+                console.log(response)
               }
             })
           }

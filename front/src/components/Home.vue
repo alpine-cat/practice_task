@@ -49,6 +49,9 @@
           <select v-model="project_name" value="Выберите проект">
             <option v-for="project in projects" :value="project">{{project.text}}</option>
           </select>
+          <div style="margin:5px 0"><label for="task_status">Статус</label>
+          <input id="task_status" type="checkbox" v-model="task_status" @change="taskStatusChanged">
+          </div>
           </div>
           <button class="addButton" @click="addTask">Добавить</button>
           <button @click="add_task = false" class="addButton">Отмена</button>
@@ -85,7 +88,8 @@
           ],
           title: '',
           project_name: '',
-          priority_select: ''
+          priority_select: '',
+          task_status: 'True'
         }
       },
       created() {
@@ -94,7 +98,7 @@
         }
         $.ajaxSetup({
           headers: {
-            'Authorization': `Bearer ${sessionStorage.getItem('access')}`
+           'Authorization': `${sessionStorage.getItem('token')}`
           }
         })
         this.username = sessionStorage.username
@@ -102,25 +106,7 @@
         this.getToday()
       },
       methods: {
-        refreshTokens(fun, args) {
-          $.ajax({
-            url: 'http://127.0.0.1:8000/auth/refresh/',
-            type: 'POST',
-            data: {
-              'refresh': sessionStorage.refresh
-            },
-            success: (responce) => {
-              sessionStorage.access = responce.access
-              if(args)
-                fun(args)
-              else
-                fun()
-            },
-            error: (responce) => {
-              this.onLogout()
-            }
-          })
-        },
+
         onLogout() {
           sessionStorage.clear()
           $.ajaxSetup({
@@ -130,40 +116,46 @@
           })
           this.$router.push({name: 'auth'})
         },
+        taskStatusChanged(){
+        console.log(this.task_status)
+        if(this.task_status==='False')
+          this.task_status = 'True'
+         else
+          this.task_status = 'False'
+        },
         getTasks(args){
           this.title = args.name;
           this.tasks = [];
-
+          console.log(args.id)
           $.ajax({
             url: `http://127.0.0.1:8000/tasks/?project=${args.id}&date_ch=&status=False&owner=${sessionStorage.username}`,
             type: 'GET',
-            success: (responce) => {
-              console.log(responce)
-              for (let t in responce) {
-                this.setColorByPriority(responce[t])
+            success: (response) => {
+              console.log(response)
+              for (let t in response) {
+                this.setColorByPriority(response[t])
               }
             },
-            error: (responce) => {
-              this.refreshTokens(this.getTasks, {value, name})
+            error: (response) => {
             }
           })
         },
         getProjects() {
           $.ajax({
-            url: 'http://127.0.0.1:8000/projects',
+            url: `http://127.0.0.1:8000/projects/?owner=${sessionStorage.username}`,
             type: 'GET',
-            success: (responce) => {
-              for (let v in responce) {
+            success: (response) => {
+              for (let v in response) {
                 this.projects.push(
-                  {id: responce[v].id,
-                    text: responce[v].project_name,
-                    color: responce[v].color,
-                    url: responce[v].url})
+                  {id: response[v].id,
+                    text: response[v].project_name,
+                    color: response[v].color,
+                    url: response[v].url})
 
               }
             },
-            error: (responce) => {
-              this.refreshTokens(this.getProjects)
+            error: (response) => {
+            console.log(response)
             }
           })
         },
@@ -177,15 +169,14 @@
           $.ajax({
             url: `http://127.0.0.1:8000/tasks/?project=&date_ch=${date}&status=False&owner=${sessionStorage.username}`,
             type: 'GET',
-            success: (responce) => {
-                console.log(responce)
-                for (let t in responce) {
-                  this.setColorByPriority(responce[t])
+            success: (response) => {
+                console.log(response)
+                for (let t in response) {
+                  this.setColorByPriority(response[t])
                 }
 
             },
-            error: (responce) => {
-              this.refreshTokens(this.getToday)
+            error: (response) => {
             }
           })
         },
@@ -197,15 +188,14 @@
           $.ajax({
             url: `http://127.0.0.1:8000/tasks/?project=&date_ch=${date}&status=False&owner=${sessionStorage.username}`,
             type: 'GET',
-            success: (responce) => {
+            success: (response) => {
 
-                for (let t in responce) {
-                  this.setColorByPriority(responce[t])
+                for (let t in response) {
+                  this.setColorByPriority(response[t])
 
               }
             },
-            error: (responce) => {
-              this.refreshTokens(this.get7Days)
+            error: (response) => {
             }
           })
         },
@@ -215,16 +205,17 @@
               url: 'http://127.0.0.1:8000/projects/',
               type: 'POST',
               data: {
+                'owner': 'http://127.0.0.1:8000/users/'+sessionStorage.user_id+'/',
                 'project_name': this.new_proj,
                 'color': this.proj_color,
                 'tasks': []
               },
-              success: (responce) => {
+              success: (response) => {
                 this.add = false
                 this.$router.go(0)
               },
-              error: (responce) => {
-                this.refreshTokens(this.addProject)
+              error: (response) => {
+              console.log(response)
               }
             })
           }
@@ -242,14 +233,13 @@
               task: this.new_task,
               date: moment(this.task_date).format("YYYY-MM-DD"),
               priority: this.priority_select.id,
-              status: 'False'
+              status: this.task_status
             },
-            success: (responce) => {
+            success: (response) => {
               this.$router.go(0)
             },
-            error: (responce) => {
-              this.refreshTokens(this.saveTask)
-              alert('Перепроверьте правильность введенных данных или перезагрузите страницу.')
+            error: (response) => {
+              alert('Проверьте правильность введенных данных.')
             }
           })
         },
@@ -259,16 +249,15 @@
           $.ajax({
             url: `http://127.0.0.1:8000/tasks/?project=&date_ch=&status=True&owner=${sessionStorage.username}`,
             type: 'GET',
-            success: (responce) => {
+            success: (response) => {
 
-              for (let t in responce) {
+              for (let t in response) {
 
-                this.setColorByPriority(responce[t])
+                this.setColorByPriority(response[t])
 
               }
             },
-            error: (responce) => {
-              this.refreshTokens(this.getArchive)
+            error: (response) => {
             }
           })
         },

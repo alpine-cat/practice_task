@@ -36,15 +36,15 @@
               password2: this.password2
 
             },
-            success: (responce) => {
-              sessionStorage.username = responce.user.username
-              sessionStorage.access = responce.access
-              sessionStorage.refresh = responce.refresh
+            success: (response) => {
+              sessionStorage.username = response.user.username
+              sessionStorage.token = response.token
+              sessionStorage.user_id = response.user.pk
               this.$router.push({name: 'home'})
             },
-            error: (responce) => {
-              console.log(responce)
-              if (responce.status === 400) {
+            error: (response) => {
+              console.log(response)
+              if (response.status === 400) {
                 alert('Проверьте правильность введенных данных!')
               }
             }

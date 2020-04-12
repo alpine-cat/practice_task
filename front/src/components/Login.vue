@@ -26,16 +26,16 @@
               username: this.login,
               password: this.password
             },
-            success: (responce) => {
-              sessionStorage.access = responce.access
-              sessionStorage.refresh = responce.refresh
-              sessionStorage.username = responce.user.username
+            success: (response) => {
+            console.log(response)
+              sessionStorage.token = response.token
+              sessionStorage.username = response.user.username
+              sessionStorage.user_id = response.user.pk
               this.$router.push({name: 'home'})
             },
-            error: (responce) => {
-              if (responce.status === 400) {
-                alert('Неверный логин или пароль!')
-              }
+            error: (response) => {
+              console.log(response)
+              alert('Неверный логин или пароль!')
             }
           })
         },
