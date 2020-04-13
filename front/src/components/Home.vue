@@ -39,7 +39,7 @@
           У вас пока нет заданий
           </div>
         <div v-else v-for="task in tasks">
-          <Task v-bind:task="task" v-bind:projects="projects_length" v-bind:key="task.id"></Task>
+          <Task v-bind:task="task" v-bind:projects="projects" v-bind:key="task.id"></Task>
         </div>
           <div class="create" v-if="add_task" id="new_task">
             <input type="text" v-model="new_task" placeholder="Введите задание">
