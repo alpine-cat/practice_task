@@ -37,16 +37,12 @@
 
             },
             success: (response) => {
-              sessionStorage.username = response.user.username
-              sessionStorage.token = response.token
-              sessionStorage.user_id = response.user.pk
+              sessionStorage.token = response.key
               this.$router.push({name: 'home'})
             },
             error: (response) => {
-              console.log(response)
-              if (response.status === 400) {
-                alert('Проверьте правильность введенных данных!')
-              }
+              for (let e in response.responseJSON)
+                alert(response.responseJSON[e][0])
             }
           })
         }

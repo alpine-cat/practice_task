@@ -28,14 +28,12 @@
             },
             success: (response) => {
             console.log(response)
-              sessionStorage.token = response.token
-              sessionStorage.username = response.user.username
-              sessionStorage.user_id = response.user.pk
+              sessionStorage.token = response.key
               this.$router.push({name: 'home'})
             },
             error: (response) => {
-              alert('Неверный логин или пароль!')
-
+              for (let e in response.responseJSON)
+                alert(response.responseJSON[e][0])
             }
           })
         },

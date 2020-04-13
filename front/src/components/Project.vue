@@ -77,7 +77,7 @@
                 this.$router.go(0)
               },
               error: (response) => {
-                this.refreshTokens()
+                console.log(response)
               }
 
             }

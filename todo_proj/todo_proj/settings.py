@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_auth',
-    'rest_framework_jwt',
     'rest_framework.authtoken',
     'django.contrib.sites',
     'allauth',
@@ -50,7 +49,6 @@ INSTALLED_APPS = [
     'django_filters'
 ]
 SITE_ID = 1
-REST_USE_JWT = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
 MIDDLEWARE = [
@@ -135,14 +133,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -152,18 +147,3 @@ REST_FRAMEWORK = {
     ],
 }
 ACCOUNT_LOGOUT_ON_GET = True
-REST_AUTH_TOKEN_MODEL = 'rest_framework_simplejwt.models.TokenUser'
-
-from datetime import timedelta
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
-
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-}
